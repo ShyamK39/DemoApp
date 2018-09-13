@@ -10,28 +10,31 @@ namespace DemoApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserInfoRepo _userInfoRepo;
+
+
+        public HomeController(IUserInfoRepo userInfoRepo)
+        {
+            _userInfoRepo = userInfoRepo;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        [HttpPost]
+        public IActionResult Index(UserInfo user)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            _userInfoRepo.AddUser(user);
+            TempData["Email"] = user.Email;
+            return RedirectToAction("EmailVerification");
         }
 
-        public IActionResult Contact()
+        public IActionResult EmailVerification()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var users = _userInfoRepo.GetAllUsers().OrderBy(p => p.UserID);
+            return View(users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

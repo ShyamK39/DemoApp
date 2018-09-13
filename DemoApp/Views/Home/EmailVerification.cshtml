@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DemoApp.Models.UserInfo>
+
+<h1>TODO: @TempData["Email"] verification + OTP </h1>
+
+<div>
+    <h2>
+        Temporary Output of All Users... while finishing OTP EF Class/Form Validation + Localization and Authentication - Will hand in soon...
+    </h2>
+
+    @foreach (var user in Model)
+    {
+    <div>
+        <h4>@user.UserID</h4>
+        <h4>@user.Email</h4>
+        <br />
+    </div>
+    }
+</div>
+
